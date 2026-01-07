@@ -8,12 +8,12 @@ export default function NavigationBar() {
   return (
     <section className="p-4 lg:py-8">
       {/* To push Content from the side of the screen */}
-      <div className="container mx-auto max-w-5xl">
+      <div className="container mx-auto">
         {/* RESPONSIVE NOTE:
             - 'md:pr-2': On tablets and larger (md breakpoint), add padding-right.
             - 'grid-cols-2': Maintains a 2-column layout on all devices.
          */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 border border-white/15 rounded-full p-2 px-4 md:pr-2 items-center">
+        <div className="grid grid-cols-2 border border-white/15 rounded-full p-2 px-4 md:pr-2 items-center">
           {/* first Column: Logo */}
           <div className="">
             <Image
@@ -25,15 +25,6 @@ export default function NavigationBar() {
               */
               className="h-9 md:h-auto w-auto"
             />
-          </div>
-
-          {/* middle Column: Navigation Items (Hidden on Mobile) */}
-          <div className="hidden lg:flex justify-center items-center">
-            <nav className="flex gap-6 font-medium">
-              {Nav_Items.map((link) => (
-                <a href={link.href} key={link.label}>{link.label}</a>
-              ))}
-            </nav>
           </div>
 
           {/* last Column: Actions (Menu + Buttons) */}
@@ -69,3 +60,4 @@ export default function NavigationBar() {
     </section>
   );
 }
+
