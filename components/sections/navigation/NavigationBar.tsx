@@ -19,7 +19,7 @@ export default function NavigationBar() {
           - `rounded-full`: Creates a "pill" shape. This feels more modern and organic than a sharp rectangular bar stuck to the top of the screen.
           - `border-white/15`: A subtle 15% opacity border adds "definition" without being harsh. 
             This mimics glassmorphism trends.
-          - `grid-cols-2 lg:grid-cols-3`: 
+            - `grid-cols-2 lg:grid-cols-3`: 
             - On Mobile (2 cols): Left = Logo, Right = Hamburger Menu.
             - On Desktop (3 cols): Left = Logo, Center = Links, Right = Buttons.
             This Grid ensures the center links are mathematically centered, regardless of logo width.
@@ -94,12 +94,14 @@ export default function NavigationBar() {
               By making one dominant, we guide the user to the most important action.
           */}
             <Button
+              type="button"
               variant="secondary"
               className="hidden md:inline-flex items-center"
             >
               Log In
             </Button>
             <Button
+              type="button"
               variant="primary"
               className="hidden md:inline-flex items-center"
             >

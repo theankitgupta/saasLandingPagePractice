@@ -1,4 +1,4 @@
-import { HTMLAttributes } from "react";
+import { ButtonHTMLAttributes } from "react";
 import { cva } from "class-variance-authority";
 
 /* NOTE: CVA Concept
@@ -19,6 +19,9 @@ const classes = cva("border h-12 rounded-full px-6 font-medium", {
       primary: "bg-lime-400 text-neutral-950 border-lime-400",
       secondary: "border-white text-white bg-transparent",
     },
+    size: {
+      sm: "h-10",
+    }
   },
   /* NOTE: Default Variants (Optional but recommended)
     You can add a `defaultVariants` object here to set a fallback if no prop is provided.
@@ -30,9 +33,10 @@ const classes = cva("border h-12 rounded-full px-6 font-medium", {
 export default function Button(
   props: {
     variant: "primary" | "secondary";
-  } & HTMLAttributes<HTMLButtonElement>
+    size?: "sm";
+  } & ButtonHTMLAttributes<HTMLButtonElement>
 ) {
-  const { variant, className, ...otherProps } = props;
+  const { variant, className, size, ...otherProps } = props;
   return (
     <button
       /* NOTE: Using the function
@@ -43,6 +47,7 @@ export default function Button(
       className={classes({
         variant,
         className,
+        size,
       })}
       {...otherProps}
       type="button"
