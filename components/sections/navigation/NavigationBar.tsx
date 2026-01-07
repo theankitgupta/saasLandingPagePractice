@@ -8,13 +8,13 @@ export default function NavigationBar() {
   return (
     <section className="p-4">
       {/* To push Content from the side of the screen */}
-      <div className="container">
+      <div className="container mx-auto">
         {/* RESPONSIVE NOTE:
             - 'md:pr-2': On tablets and larger (md breakpoint), add padding-right.
             - 'grid-cols-2': Maintains a 2-column layout on all devices.
          */}
         <div className="grid grid-cols-2 border border-white/15 rounded-full p-2 px-4 md:pr-2 items-center">
-          {/* 1st Column: Logo */}
+          {/* first Column: Logo */}
           <div className="">
             <Image
               src={logoImage}
@@ -27,7 +27,7 @@ export default function NavigationBar() {
             />
           </div>
 
-          {/* 2nd Column: Actions (Menu + Buttons) */}
+          {/* last Column: Actions (Menu + Buttons) */}
           <div className="flex justify-end gap-4">
             {/* HAMBURGER MENU ICON (Mobile Only)
                 --------------------------------
@@ -52,16 +52,12 @@ export default function NavigationBar() {
               <line x1={3} y1={18} x2={21} y2={18}></line>
             </svg>
 
-            {/* BUTTONS
-                -------
-                className="hidden md:block" 
-                (Hidden by default, Block display on Medium screens and up).
-            */}
-            <Button variant="secondary" className="hidden md:block">Log In</Button>
-            <Button variant="primary" className="hidden md:block">Sign Up</Button>
+            <Button variant="secondary" className="hidden md:inline-flex items-center">Log In</Button>
+            <Button variant="primary" className="hidden md:inline-flex items-center">Sign Up</Button>
           </div>
         </div>
       </div>
     </section>
   );
 }
+
