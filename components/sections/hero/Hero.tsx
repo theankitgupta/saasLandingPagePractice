@@ -1,79 +1,104 @@
-import Button from "@/components/ui/Button";
 import React from "react";
+import Image from "next/image";
+import Button from "@/components/ui/Button";
+import Pointer from "@/components/ui/Pointer";
+import designExample1 from "@/assets/images/design-example-1.png";
+import designExample2 from "@/assets/images/design-example-2.png";
 
 export default function Hero() {
   return (
     /* LAYOUT CONTAINER (The Canvas)
       -----------------------------
-      - `py-24`: Adds significant vertical breathing room (96px). 
-        Essential for Hero sections to look premium and not cramped.
-      - `px-12`: Adds horizontal padding.
-          *TEMPLATE NOTE*: This ensures content never hits the very edge of the screen. 
-          For mobile specifically, `px-4` is often safer.
+      - `overflow-x-clip`: Crucial when using absolute positioning. 
+        If your floating images/pointers accidentally go outside the screen width,
+        this prevents the browser from showing a horizontal scrollbar.
+      - `py-24`: Vertical breathing room (96px). 
+      - `px-4`: Horizontal safety gutter for mobile devices.
     */
-    <section className="py-24 px-4">
-      {/* CENTERING WRAPPER
-        - `container mx-auto`: Standard Tailwind pattern. 
-          1. `container` sets a max-width based on the screen size (breakpoints).
-          2. `mx-auto` sets margin-left and margin-right to auto, effectively centering the container.
+    <section className="py-24 px-4 overflow-x-clip">
+      {/* CENTERING WRAPPER (The Reference Point)
+          ---------------------------------------
+          - `container mx-auto`: Centers the content block on the screen.
+          - `relative`: This is the Anchor. Any child with `absolute` position 
+            will position itself relative to THIS box, not the whole page.
       */}
-      <div className="container mx-auto">
-        {/* ELEMENT 1: The Badge (Flexbox Centering)
-          -----------------------------------------
-          - We wrap the badge in a `div` with `flex justify-center`.
-          - WHY? The badge itself is `inline-flex`. If we didn't wrap it, it would sit on the left. This wrapper forces it to the middle.
+      <div className="container mx-auto relative">
+        {/* FLOATING IMAGES (Desktop Only)
+          -------------------------------
+          - `hidden lg:block`: Design choice to HIDE complex floating elements on mobile.
+            Mobile screens are too cluttered for background decorations.
+          - `absolute left-1/2`: Position anchors to the exact horizontal center.
+          - `-ml-208`: "Margin Left -208". This is the "Magic Offset". 
+            Instead of using `left-0`, we start at the center and move left by a fixed pixel amount.
+            This keeps the image perfectly distant from the central text, regardless of screen width.
         */}
+        <div className="hidden lg:block absolute top-16 left-1/2 -ml-208">
+          <Image
+            src={designExample1}
+            alt="Design Example 1 Image"
+            className="max-w-xs h-auto"
+          />
+        </div>
+        <div className="hidden lg:block absolute -top-16 left-1/2 ml-120">
+          <Image
+            src={designExample2}
+            alt="Design Example 2 Image"
+            className="max-w-md h-auto"
+          />
+        </div>
+
+        {/* POINTERS (Visual Flair)
+          ------------------------
+          - Same logic as images: Anchored to center (`left-1/2`), offset by margin (`ml-90`).
+          - We pass props `name` and `color` to our custom Pointer component to reuse logic.
+        */}
+        <div className="hidden lg:block absolute left-1/2 top-100 -ml-100">
+          <Pointer name="Vegeta" />
+        </div>
+        <div className="hidden lg:block absolute left-1/2 top-2 ml-90">
+          <Pointer name="Goku" color="red" />
+        </div>
+
+        {/* BADGE SECTION (Flexbox Centering) */}
         <div className="flex justify-center">
           <div className="inline-flex py-1 px-3 bg-linear-to-r from-purple-400 to-pink-400 rounded-full text-neutral-950 font-semibold">
             ✨$7.5M seed round raised.
           </div>
         </div>
 
-        {/* ELEMENT 2: The Headline (Typography)
-          ------------------------------------
-          - `text-6xl`: Large scale for impact.
-          - `text-center`: Aligns the text itself to the center.
-          - `mt-6`: Spacing. A consistent "margin-top" scale (mt-6, mt-8) creates vertical rhythm.
-        */}
-        <h1 className="text-6xl md:text-7xl font-medium text-center mt-6">
+        {/* HEADLINE SECTION (Typography Scale) */}
+        <h1 className="text-6xl md:text-7xl lg:text-8xl font-medium text-center mt-6 max-w-4xl mx-auto">
           Impactful design, created effortlessly
         </h1>
 
-        {/* ELEMENT 3: The Subheading (Visual Hierarchy)
-          ---------------------------------------------
-          - `text-white/50`: This is crucial for design.
-            By reducing opacity to 50%, we lower the "contrast". 
-            This tells the user's eye: "Read the big white text first (H1), then read this secondary text."
-          - `px-8`: Adds internal padding to this paragraph, preventing it from getting too wide visually 
-            compared to the headline.
-        */}
+        {/* SUBHEADING (Visual Hierarchy) */}
         <p className="text-center text-xl text-white/50 mt-8 px-2 max-w-166 mx-auto">
           Design tools shouldn&apos;t slow you down. Layers combines powerful
           features with an intuitive interface that keeps you in your creative
           flow.
         </p>
 
-        {/* ELEMENT 4: The Input Group (Component Composition)
-          ---------------------------------------------------
-          - `flex justify-between`: The layout engine for this form.
-            It places the items (Input + Button) on the same line.
-            `justify-between` pushes them apart if there is extra space, though here they are tightly packed by the border.
-          - `border border-white/15`: Subtle boundary.
-          - `rounded-full`: Fully rounded corners (Pill shape) are a modern UI trend.
+        {/* FORM SECTION (Interactive State Styling)
+          ----------------------------------------
+          - `has-autofill:border-lime-400`:
+            - `has-`: Checks children elements.
+            - `:autofill`: CSS pseudo-class triggered by browser password managers.
+            - Result: "If my child input is autofilled, make MY border Lime."
         */}
-        <form className="flex justify-between border border-white/15 rounded-full p-2 mt-8 max-w-lg mx-auto">
+        <form className="flex justify-between border border-white/15 rounded-full p-2 mt-8 max-w-lg mx-auto gap-2 has-autofill:border-lime-400 transition-colors">
           <input
             type="email"
             placeholder="Enter your email"
-            /* `bg-transparent`: Removes default white background so it blends with the dark theme. */
-            // flex-1 at medium and above screen sizes so that the input field take all the right side available empty spaces
-            className="px-4 bg-transparent outline-none md:flex-1"
+            className="px-4 bg-transparent outline-none md:flex-1 rounded-full"
+            style={{
+              /* SHADOW HACK: Overrides browser white background on autofill by painting an inset shadow */
+              WebkitBoxShadow: "0 0 0 30px #0a0a0a inset",
+              WebkitTextFillColor: "white",
+            }}
           />
           <Button
             type="button"
             variant="primary"
-            /* `whitespace-nowrap`: Prevents "Sign Up" from breaking into two lines 
-               if the screen gets too small. */
             className="whitespace-nowrap"
             size="sm"
           >
