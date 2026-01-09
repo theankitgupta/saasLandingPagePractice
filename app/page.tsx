@@ -1,4 +1,5 @@
 import Hero from "@/components/sections/hero/Hero";
+import Introduction from "@/components/sections/introduction/Introduction";
 import LogoTicker from "@/components/sections/logoTicker/LogoTicker";
 import NavigationBar from "@/components/sections/navigation/NavigationBar";
 
@@ -8,6 +9,7 @@ export default function Home() {
       <NavigationBar />
       <Hero />
       <LogoTicker />
+      <Introduction />
     </>
   );
 }
