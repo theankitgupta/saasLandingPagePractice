@@ -21,17 +21,18 @@ export default function Features() {
   ];
   return (
     <section className="py-24 px-4">
-      <div className="container">
+      <div className="container mx-auto">
         <div className="flex justify-center">
           <Tag>Features</Tag>
         </div>
         <h2 className="text-6xl font-medium text-center mt-6">
           Where power meets <span className="text-lime-400">simplicity</span>
         </h2>
-        <div className="mt-12 grid grid-cols-1 gap-8 p-1">
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-4 gap-8 p-1">
           <FeatureCard
             title="Real-time Collaboration"
             description="Work together seamlessly with conflict-free team editing"
+            className="md:col-span-2"
           >
             <div className="aspect-video flex items-center justify-center">
               <Avatar className="z-40">
@@ -58,8 +59,9 @@ export default function Features() {
           <FeatureCard
             title="Interactive Prototyping"
             description="Engage your clients with prototypes that react to user actions"
+            className="md:col-span-2"
           >
-            <div className="aspect-video">
+            <div className="aspect-video flex items-center">
               <p className="text-4xl font-extrabold text-white/20 text-center justify-center">
                 We&apos;ve achieved{" "}
                 <span className="bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
@@ -72,6 +74,7 @@ export default function Features() {
           <FeatureCard
             title="Keyboard Quick Actions"
             description="Powerful commands to help you create designs more quickly"
+            className="md:col-span-2 md:col-start-2"
           >
             <div className="aspect-video flex items-center justify-center gap-4">
               <Key className="w-28">Shift</Key>
@@ -83,11 +86,11 @@ export default function Features() {
         <div className="mt-8 flex flex-wrap gap-3 justify-center">
           {features.map((feature) => (
             <div
-              className="bg-neutral-900 border border-white/10 inline-flex px-3 py-1.5 rounded-2xl gap-3 items-center"
+              className="bg-neutral-900 border border-white/10 inline-flex px-3 md:px-6 py-1.5 md:py-2 rounded-2xl gap-3 items-center"
               key={feature}
             >
               <span className="bg-lime-400 text-neutral-950 size-5 rounded-full inline-flex justify-center items-center text-xl">&#10038;</span>
-              <span className="font-medium">{feature}</span>
+              <span className="font-medium md:text-lg">{feature}</span>
             </div>
           ))}
         </div>
