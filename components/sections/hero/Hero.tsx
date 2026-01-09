@@ -89,7 +89,7 @@ export default function Hero() {
           <input
             type="email"
             placeholder="Enter your email"
-            className="px-4 bg-transparent outline-none md:flex-1 rounded-full"
+            className="px-4 bg-transparent outline-none md:flex-1 rounded-full w-full"
             style={{
               /* SHADOW HACK: Overrides browser white background on autofill by painting an inset shadow */
               WebkitBoxShadow: "0 0 0 30px #0a0a0a inset",
