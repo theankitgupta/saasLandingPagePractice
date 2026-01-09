@@ -37,3 +37,5 @@ export const Integration_Items = [
     description: "GitHub is the leading platform for code collaboration.",
   },
 ];
+
+export type IntegrationType = typeof Integration_Items;
