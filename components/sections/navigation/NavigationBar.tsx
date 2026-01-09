@@ -84,7 +84,7 @@ export default function NavigationBar() {
               <line x1={3} y1={18} x2={21} y2={18}></line>
             </svg>
 
-          {/* DESIGN PRINCIPLE: "Visual Hierarchy"
+            {/* DESIGN PRINCIPLE: "Visual Hierarchy"
               ------------------------------------
               Notice we have two buttons, but they look different.
               1. `secondary` (Log In): Less visual weight. For existing users.

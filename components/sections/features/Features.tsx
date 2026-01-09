@@ -1,13 +1,12 @@
 import React from "react";
 import FeatureCard from "@/components/ui/FeatureCard";
 import Tag from "@/components/ui/Tag";
-import avatar1 from '@/assets/images/avatar-ashwin-santiago.jpg';
-import avatar2 from '@/assets/images/avatar-lula-meyers.jpg';
-import avatar3 from '@/assets/images/avatar-florence-shaw.jpg';
+import avatar1 from "@/assets/images/avatar-ashwin-santiago.jpg";
+import avatar2 from "@/assets/images/avatar-lula-meyers.jpg";
+import avatar3 from "@/assets/images/avatar-florence-shaw.jpg";
 import Image from "next/image";
 import Avatar from "@/components/ui/Avatar";
 import Key from "@/components/ui/Key";
-
 
 export default function Features() {
   const features = [
@@ -89,7 +88,9 @@ export default function Features() {
               className="bg-neutral-900 border border-white/10 inline-flex px-3 md:px-6 py-1.5 md:py-2 rounded-2xl gap-3 items-center"
               key={feature}
             >
-              <span className="bg-lime-400 text-neutral-950 size-5 rounded-full inline-flex justify-center items-center text-xl">&#10038;</span>
+              <span className="bg-lime-400 text-neutral-950 size-5 rounded-full inline-flex justify-center items-center text-xl">
+                &#10038;
+              </span>
               <span className="font-medium md:text-lg">{feature}</span>
             </div>
           ))}

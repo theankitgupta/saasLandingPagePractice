@@ -21,7 +21,7 @@ const classes = cva("border h-12 rounded-full px-6 font-medium", {
     },
     size: {
       sm: "h-10",
-    }
+    },
   },
   /* NOTE: Default Variants (Optional but recommended)
     You can add a `defaultVariants` object here to set a fallback if no prop is provided.
