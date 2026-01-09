@@ -1,3 +1,4 @@
+import Features from "@/components/sections/features/Features";
 import Hero from "@/components/sections/hero/Hero";
 import Introduction from "@/components/sections/introduction/Introduction";
 import LogoTicker from "@/components/sections/logoTicker/LogoTicker";
@@ -10,6 +11,7 @@ export default function Home() {
       <Hero />
       <LogoTicker />
       <Introduction />
+      <Features />
     </>
   );
 }
