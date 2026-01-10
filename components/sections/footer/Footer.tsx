@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <section className="py-16 px-4">
       <div className="container mx-auto">
-        <div className="flex flex-col items-center gap-6">
+        <div className="flex flex-col md:flex-row items-center md:justify-between gap-6 md:px-6">
           <div className="">
             <Image src={logoImage} alt="Logo Image" />
           </div>
