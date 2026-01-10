@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { Nav_Items } from "@/data/navigationBar";
+import { Nav_Items } from "@/data/navigationLink";
 import logoImage from "@/assets/images/logo.svg";
 import Button from "@/components/ui/Button";
 

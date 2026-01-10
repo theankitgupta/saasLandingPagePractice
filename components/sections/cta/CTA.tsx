@@ -14,7 +14,7 @@ export default function CTA() {
           - `p-4`: Standard padding safety.
           - `flex`: Sets up the layout for the internal track.
       */}
-      <div className="container overflow-x-clip p-4 flex">
+      <div className="container overflow-x-clip p-4 flex mx-auto">
         {/* THE TRACK: The Container of Repeating Text
             -----------------------------------------
             - `flex-none`: Prevents the track from shrinking to fit the container. It allows the content to expand as wide as it needs to be.

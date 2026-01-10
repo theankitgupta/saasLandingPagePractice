@@ -16,3 +16,18 @@ export const Nav_Items = [
     href: "#faqs",
   },
 ];
+
+export const Footer_Items = [
+  {
+    label: "Contact",
+    href: "#contact",
+  },
+  {
+    label: "Privacy Policy",
+    href: "#privacyPolicy",
+  },
+  {
+    label: "Terms & Conditions",
+    href: "#termsAndConditions",
+  },
+];
