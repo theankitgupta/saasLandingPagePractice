@@ -5,6 +5,9 @@ import relumeIcon from "@/assets/images/relume-logo.svg";
 import framerIcon from "@/assets/images/framer-logo.svg";
 import githubIcon from "@/assets/images/github-logo.svg";
 
+/* CONCEPT: Content Mapping
+  - We define the raw data here so the Component (IntegrationColumns) only has to worry about the "Looping" logic.
+*/
 export const Integration_Items = [
   {
     name: "Figma",
@@ -38,4 +41,7 @@ export const Integration_Items = [
   },
 ];
 
+/* TYPE SAFETY: 
+  - We export the 'type' of our data so that our Components know exactly what properties (name, icon, description) to expect.
+*/
 export type IntegrationType = typeof Integration_Items;

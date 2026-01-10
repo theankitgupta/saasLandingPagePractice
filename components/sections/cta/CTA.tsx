@@ -1,0 +1,18 @@
+import React from "react";
+
+export default function CTA() {
+  return (
+    <section className="py-24">
+      <div className="container overflow-x-clip p-4 flex">
+        <div className="flex flex-none gap-16 text-8xl font-medium">
+          {Array.from({ length: 10 }).map((_, i) => (
+            <div className="flex items-center gap-8" key={i}>
+              <span className="text-lime-400">&#10038;</span>
+              <span>Try it for free</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
