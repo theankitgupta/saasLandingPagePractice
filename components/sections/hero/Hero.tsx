@@ -165,7 +165,7 @@ export default function Hero() {
         </motion.div>
 
         {/* STATIC CONTENT: Badge Standard Flexbox centering (explained in previous lessons).
-        */}
+         */}
         <div className="flex justify-center">
           <div className="inline-flex py-1 px-3 bg-linear-to-r from-purple-400 to-pink-400 rounded-full text-neutral-950 font-semibold">
             ✨$7.5M seed round raised.
@@ -185,7 +185,7 @@ export default function Hero() {
         </p>
 
         {/* STATIC CONTENT: Interactive Form `has-autofill`: Reacts to browser auto-completion.
-        */}
+         */}
         <form className="flex justify-between border border-white/15 rounded-full p-2 mt-8 max-w-lg mx-auto gap-2 has-autofill:border-lime-400 transition-colors">
           <input
             type="email"
