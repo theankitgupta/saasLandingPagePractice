@@ -5,7 +5,6 @@ import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import { motion } from "framer-motion";
 import { IntegrationType } from "@/data/integration";
-import { reverse } from "dns";
 
 export default function IntegrationColumns(props: {
   className?: string;
