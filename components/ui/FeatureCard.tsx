@@ -25,7 +25,9 @@ export default function FeatureCard(props: {
           - 'aspect-video': Forces this container into a 16:9 ratio. 
           - WHY? This ensures all feature cards have the exact same height for their visual content, making the grid look perfectly aligned.
       */}
-      <div className="aspect-video">{children}</div>
+      <div className="aspect-video flex items-center justify-center">
+        {children}
+      </div>
 
       {/* LAYOUT: Text Content
           - Separating Text from Visuals allows for clean vertical spacing ('mt-6').

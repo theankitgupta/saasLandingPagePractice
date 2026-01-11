@@ -4,9 +4,13 @@ import Tag from "@/components/ui/Tag";
 import avatar1 from "@/assets/images/avatar-ashwin-santiago.jpg";
 import avatar2 from "@/assets/images/avatar-lula-meyers.jpg";
 import avatar3 from "@/assets/images/avatar-florence-shaw.jpg";
+import avatar4 from "@/assets/images/avatar-owen-garcia.jpg";
 import Image from "next/image";
 import Avatar from "@/components/ui/Avatar";
 import Key from "@/components/ui/Key";
+import { keyMotion, avatarMotion } from "@/lib/motion";
+import { avatarStagger } from "@/lib/motion";
+import StackedAvatar from "@/components/ui/StackedAvatar";
 
 export default function Features() {
   // CONCEPT: Feature List
@@ -50,34 +54,57 @@ export default function Features() {
           <FeatureCard
             title="Real-time Collaboration"
             description="Work together seamlessly with conflict-free team editing"
-            className="md:col-span-2 lg:col-span-1"
+            className="md:col-span-2 lg:col-span-1 group"
           >
             {/* ASPECT RATIO: 'aspect-video' ensures the decorative area remains a consistent 16:9 rectangle regardless of card width. */}
-            <div className="aspect-video flex items-center justify-center">
-              {/* Negative Margin Trick: 
-                  - Using `-ml-6` on stacked elements creates the "Overlapping Avatars" look commonly seen in collaborative UI.
-                  - `z-[x]` is used to ensure the left-most avatar stays on top. 
-              */}
-              <Avatar className="z-40">
-                <Image src={avatar1} alt="Avatar 1" className="rounded-full" />
-              </Avatar>
-              <Avatar className="-ml-6 border-indigo-500 z-30">
-                <Image src={avatar2} alt="Avatar 2" className="rounded-full" />
-              </Avatar>
-              <Avatar className="-ml-6 border-amber-500 z-20">
-                <Image src={avatar3} alt="Avatar 3" className="rounded-full" />
-              </Avatar>
-              {/* Decorative "More" Avatar: 
-                  Instead of an image, we use an array map to create the "..." loading/more dots. 
-              */}
-              <Avatar className="-ml-6 border-transparent z-10">
-                <div className="size-full bg-neutral-700 rounded-full inline-flex items-center justify-center gap-1">
-                  {Array.from({ length: 3 }).map((_, i) => (
-                    <span
-                      key={i}
-                      className="size-1.5 rounded-full bg-white inline-flex"
-                    ></span>
-                  ))}
+            <div className="aspect-video flex items-center justify-center group">
+              <StackedAvatar
+                src={avatar1}
+                alt="Avatar 1"
+                className={`z-40 ${avatarStagger[0]}`}
+              />
+              <StackedAvatar
+                src={avatar2}
+                alt="Avatar 2"
+                className={`-ml-6 z-30 border-amber-500 ${avatarStagger[1]}`}
+              />
+              <StackedAvatar
+                src={avatar3}
+                alt="Avatar 3"
+                className={`-ml-6 z-20 border-indigo-500 ${avatarStagger[2]}`}
+              />
+
+              {/* Special case avatar stays inline */}
+              <Avatar
+                className={`-ml-6 border-transparent transition-all duration-300 ease-out group-hover:border-green-500 ${avatarStagger[3]} ${avatarMotion}`}
+              >
+                <div className="relative size-full rounded-full overflow-hidden bg-neutral-700 flex items-center justify-center">
+                  {/* Dots */}
+                  <div className="flex gap-1 transition-all duration-300 group-hover:opacity-0 group-hover:scale-90">
+                    {Array.from({ length: 3 }).map((_, i) => (
+                      <span
+                        key={i}
+                        className="size-1.5 rounded-full bg-white"
+                      />
+                    ))}
+                  </div>
+
+                  {/* Avatar reveal */}
+                  <Image
+                    src={avatar4}
+                    alt="Avatar 4"
+                    className="
+                      absolute inset-0
+                      rounded-full
+                      opacity-0
+                      scale-105
+                      transition-all
+                      duration-300
+                      ease-out
+                      group-hover:opacity-100
+                      group-hover:scale-100
+                    "
+                  />
                 </div>
               </Avatar>
             </div>
@@ -89,15 +116,43 @@ export default function Features() {
           <FeatureCard
             title="Interactive Prototyping"
             description="Engage your clients with prototypes that react to user actions"
-            className="md:col-span-2 lg:col-span-1"
+            className="md:col-span-2 lg:col-span-1 group"
           >
-            <div className="aspect-video flex items-center">
+            <div className="aspect-video flex items-center justify-center">
               {/* 'text-white/20': Low contrast text acts as a background element. */}
-              <p className="text-4xl font-extrabold text-white/20 text-center justify-center">
+              <p className="relative text-4xl font-extrabold text-white/20 group-hover:text-white transition-all duration-500 ease-out text-center">
                 We&apos;ve achieved{" "}
                 {/* 'bg-clip-text': The standard way to apply a gradient to text. */}
-                <span className="bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                  incredible
+                <span>
+                  <span className="bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    incredible
+                  </span>
+                  {/* Hover video */}
+                  <video
+                    src="/assets/gif-incredible.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="
+                      absolute
+                      bottom-full
+                      left-1/2
+                      -translate-x-1/2
+                      mb-4
+                      w-48
+                      rounded-2xl
+                      shadow-xl
+                      opacity-0
+                      scale-95
+                      transition-all
+                      duration-500
+                      ease-out
+                      pointer-events-none
+                      group-hover:opacity-100
+                      group-hover:scale-100
+                    "
+                  />
                 </span>{" "}
                 growth this year
               </p>
@@ -110,13 +165,12 @@ export default function Features() {
           <FeatureCard
             title="Keyboard Quick Actions"
             description="Powerful commands to help you create designs more quickly"
-            className="md:col-span-2 lg:col-span-1 md:col-start-2 lg:col-start-auto"
+            className="md:col-span-2 lg:col-span-1 md:col-start-2 lg:col-start-auto group"
           >
             <div className="aspect-video flex items-center justify-center gap-4">
-              {/* Custom 'Key' components simulate a physical keyboard. */}
-              <Key className="w-28">Shift</Key>
-              <Key className="">alt</Key>
-              <Key className="">C</Key>
+              <Key className={`w-28 ${keyMotion}`}>Shift</Key>
+              <Key className={`${keyMotion} $delay-75`}>alt</Key>
+              <Key className={`${keyMotion} delay-150`}>C</Key>
             </div>
           </FeatureCard>
         </div>
@@ -129,11 +183,11 @@ export default function Features() {
         <div className="mt-8 flex flex-wrap gap-3 justify-center">
           {features.map((feature) => (
             <div
-              className="bg-neutral-900 border border-white/10 inline-flex px-3 md:px-6 py-1.5 md:py-2 rounded-2xl gap-3 items-center"
+              className="bg-neutral-900 border border-white/10 inline-flex px-3 md:px-6 py-1.5 md:py-2 rounded-2xl gap-3 items-center hover:scale-105 transition duration-500 group"
               key={feature}
             >
               {/* The Star Symbol: Using a custom hex code symbol as a bullet point. */}
-              <span className="bg-lime-400 text-neutral-950 size-5 rounded-full inline-flex justify-center items-center text-xl">
+              <span className="bg-lime-400 text-neutral-950 size-5 rounded-full inline-flex justify-center items-center text-xl group-hover:rotate-45 transition duration-500">
                 &#10038;
               </span>
               <span className="font-medium md:text-lg">{feature}</span>
