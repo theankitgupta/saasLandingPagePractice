@@ -13,9 +13,6 @@ import { avatarStagger } from "@/lib/motion";
 import StackedAvatar from "@/components/ui/StackedAvatar";
 
 export default function Features() {
-  // CONCEPT: Feature List
-  // Using an array allows us to map through simple strings to create a "tag cloud"
-  // at the bottom, ensuring consistent styling without repeating code.
   const features = [
     "Asset Library",
     "Code Preview",
@@ -29,9 +26,6 @@ export default function Features() {
   return (
     <section className="py-24 px-4">
       <div className="container mx-auto">
-        {/* HEADER: Standardized Alignment
-            The 'flex justify-center' wrapper for the Tag is a reusable pattern for maintaining a centered vertical axis across all site sections.
-        */}
         <div className="flex justify-center">
           <Tag>Features</Tag>
         </div>
@@ -39,25 +33,31 @@ export default function Features() {
           Where power meets <span className="text-lime-400">simplicity</span>
         </h2>
 
-        {/* BENTO GRID: Responsive Logic
+        {/* BENTO GRID: Responsive Layout
             ----------------------------
-            - `grid-cols-1`: Vertical stack on mobile.
-            - `md:grid-cols-4`: A 4-column base for tablet to allow for 2-column wide cards.
-            - `lg:grid-cols-3`: A 3-column layout for desktop for a balanced "tri-card" look.
-            - `gap-8`: Generous spacing helps individual features stand out.
+            - `grid-cols-1`: Mobile first (stack vertically).
+            - `md:grid-cols-4`: Tablet (allows for 2-col wide cards).
+            - `lg:grid-cols-3`: Desktop (3-column balanced look).
+            - `gap-8`: Spacious separation between cards.
         */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-4 lg:grid-cols-3 gap-8 p-1">
-          {/* CARD 1: Avatar Stacking
-              - `md:col-span-2`: Takes up half the tablet width.
-              - `lg:col-span-1`: Returns to a single slot on desktop.
+          {/* CARD 1: The "Real-time Collaboration" Card
+              ------------------------------------------
+              - `group`: Vital for interactions. Hovering ANYWHERE on this card triggers
+                animations on the children elements (the avatars).
+              - `md:col-span-2 lg:col-span-1`: Responsive spanning logic.
           */}
           <FeatureCard
             title="Real-time Collaboration"
             description="Work together seamlessly with conflict-free team editing"
             className="md:col-span-2 lg:col-span-1 group"
           >
-            {/* ASPECT RATIO: 'aspect-video' ensures the decorative area remains a consistent 16:9 rectangle regardless of card width. */}
             <div className="aspect-video flex items-center justify-center group">
+              {/* STACKED AVATARS
+                  - We use a custom component `StackedAvatar` to reduce code duplication.
+                  - `avatarStagger[x]`: These are utility classes (delay-75, delay-150) 
+                    that make the avatars jump one after another instead of all at once.
+              */}
               <StackedAvatar
                 src={avatar1}
                 alt="Avatar 1"
@@ -74,12 +74,17 @@ export default function Features() {
                 className={`-ml-6 z-20 border-indigo-500 ${avatarStagger[2]}`}
               />
 
-              {/* Special case avatar stays inline */}
+              {/* SPECIAL CASE: The "More" Avatar
+                  This one is complex because it transforms from "Dots" (...) to a "Face" on hover.
+              */}
               <Avatar
                 className={`-ml-6 border-transparent transition-all duration-300 ease-out group-hover:border-green-500 ${avatarStagger[3]} ${avatarMotion}`}
               >
                 <div className="relative size-full rounded-full overflow-hidden bg-neutral-700 flex items-center justify-center">
-                  {/* Dots */}
+                  {/* STATE 1: The Dots (Visible by default)
+                      - `group-hover:opacity-0`: Fades out when card is hovered.
+                      - `group-hover:scale-90`: Shrinks slightly for a smooth exit.
+                  */}
                   <div className="flex gap-1 transition-all duration-300 group-hover:opacity-0 group-hover:scale-90">
                     {Array.from({ length: 3 }).map((_, i) => (
                       <span
@@ -89,20 +94,20 @@ export default function Features() {
                     ))}
                   </div>
 
-                  {/* Avatar reveal */}
+                  {/* STATE 2: The Face (Hidden by default)
+                      - `absolute inset-0`: Overlays perfectly on top of the dots.
+                      - `opacity-0`: Invisible initially.
+                      - `group-hover:opacity-100`: Becomes visible on hover.
+                      - `scale-105` -> `scale-100`: Creates a subtle "Zoom In" entrance effect.
+                  */}
                   <Image
                     src={avatar4}
                     alt="Avatar 4"
                     className="
-                      absolute inset-0
-                      rounded-full
-                      opacity-0
-                      scale-105
-                      transition-all
-                      duration-300
-                      ease-out
-                      group-hover:opacity-100
-                      group-hover:scale-100
+                      absolute inset-0 rounded-full
+                      opacity-0 scale-105
+                      transition-all duration-300 ease-out
+                      group-hover:opacity-100 group-hover:scale-100
                     "
                   />
                 </div>
@@ -110,8 +115,8 @@ export default function Features() {
             </div>
           </FeatureCard>
 
-          {/* CARD 2: Typography & Gradients
-              Demonstrates a "Feature Preview" using stylized text rather than an icon.
+          {/* CARD 2: Interactive Prototyping
+              Demonstrates complex text masking and video integration.
           */}
           <FeatureCard
             title="Interactive Prototyping"
@@ -119,15 +124,21 @@ export default function Features() {
             className="md:col-span-2 lg:col-span-1 group"
           >
             <div className="aspect-video flex items-center justify-center">
-              {/* 'text-white/20': Low contrast text acts as a background element. */}
               <p className="relative text-4xl font-extrabold text-white/20 group-hover:text-white transition-all duration-500 ease-out text-center">
                 We&apos;ve achieved{" "}
-                {/* 'bg-clip-text': The standard way to apply a gradient to text. */}
                 <span>
+                  {/* TEXT GRADIENT:
+                      - `bg-clip-text text-transparent`: Standard Tailwind pattern for gradient text.
+                  */}
                   <span className="bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                     incredible
                   </span>
-                  {/* Hover video */}
+
+                  {/* HOVER VIDEO POPUP
+                      - `pointer-events-none`: Ensures the video doesn't block mouse interactions.
+                      - `bottom-full`: Positions it directly above the word "incredible".
+                      - `opacity-0` -> `group-hover:opacity-100`: Fade in effect.
+                  */}
                   <video
                     src="/assets/gif-incredible.mp4"
                     autoPlay
@@ -135,22 +146,10 @@ export default function Features() {
                     muted
                     playsInline
                     className="
-                      absolute
-                      bottom-full
-                      left-1/2
-                      -translate-x-1/2
-                      mb-4
-                      w-48
-                      rounded-2xl
-                      shadow-xl
-                      opacity-0
-                      scale-95
-                      transition-all
-                      duration-500
-                      ease-out
-                      pointer-events-none
-                      group-hover:opacity-100
-                      group-hover:scale-100
+                      absolute bottom-full left-1/2 -translate-x-1/2 mb-4 w-48 rounded-2xl shadow-xl
+                      opacity-0 scale-95
+                      transition-all duration-500 ease-out pointer-events-none
+                      group-hover:opacity-100 group-hover:scale-100
                     "
                   />
                 </span>{" "}
@@ -159,8 +158,8 @@ export default function Features() {
             </div>
           </FeatureCard>
 
-          {/* CARD 3: UI Components as Visuals
-              - `md:col-start-2`: On tablet (4 columns), this centers the third card by starting it in the second column slot.
+          {/* CARD 3: Keyboard Actions
+              Demonstrates sequential animation (staggering) using CSS delays.
           */}
           <FeatureCard
             title="Keyboard Quick Actions"
@@ -168,25 +167,26 @@ export default function Features() {
             className="md:col-span-2 lg:col-span-1 md:col-start-2 lg:col-start-auto group"
           >
             <div className="aspect-video flex items-center justify-center gap-4">
+              {/* `keyMotion`: The bounce animation class.
+                  `delay-75`: CSS class that waits 75ms before starting.
+              */}
               <Key className={`w-28 ${keyMotion}`}>Shift</Key>
-              <Key className={`${keyMotion} $delay-75`}>alt</Key>
+              <Key className={`${keyMotion} delay-75`}>alt</Key>
               <Key className={`${keyMotion} delay-150`}>C</Key>
             </div>
           </FeatureCard>
         </div>
 
-        {/* PILL CLOUD: Secondary Features
-            ------------------------------
-            - `flex-wrap`: Vital for mobile so tags flow to the next line.
-            - `gap-3`: Tighter spacing than the grid to show these are "minor" items.
-        */}
+        {/* PILL CLOUD: Secondary Features */}
         <div className="mt-8 flex flex-wrap gap-3 justify-center">
           {features.map((feature) => (
             <div
               className="bg-neutral-900 border border-white/10 inline-flex px-3 md:px-6 py-1.5 md:py-2 rounded-2xl gap-3 items-center hover:scale-105 transition duration-500 group"
               key={feature}
             >
-              {/* The Star Symbol: Using a custom hex code symbol as a bullet point. */}
+              {/* ICON ROTATION
+                  - `group-hover:rotate-45`: When the pill is hovered, spin the star.
+              */}
               <span className="bg-lime-400 text-neutral-950 size-5 rounded-full inline-flex justify-center items-center text-xl group-hover:rotate-45 transition duration-500">
                 &#10038;
               </span>

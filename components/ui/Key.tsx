@@ -9,6 +9,11 @@ export default function Key({
   return (
     <div
       className={twMerge(
+        /* KEYBOARD STYLING
+          - `shadow-[0_6px_0_0_rgba(0,0,0,0.6)]`: This is the "Side" of the keycap. It creates 3D depth. When we animate, we will reduce this shadow to make it look "pressed".
+          - `transition-all`: Ensures the press action is smooth.
+          - `ease-[cubic-bezier...]`: Custom easing for a "snappy" mechanical feel.
+        */
         `
         size-14
         bg-neutral-500
@@ -27,4 +32,3 @@ export default function Key({
     </div>
   );
 }
-

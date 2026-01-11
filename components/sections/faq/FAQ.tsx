@@ -1,14 +1,23 @@
-"use client";
+"use client"; // REQUIRED: This component uses interactivity (onClick, useState), so it must be a Client Component.
+
 import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import Tag from "@/components/ui/Tag";
 import { FAQ_Items } from "@/data/faq";
+/* LIBRARY: Framer Motion
+  ----------------------
+  - `motion`: Wrapper to make elements animatable.
+  - `AnimatePresence`: Essential for "Exit Animations". It allows React to keep an element in the DOM *just long enough* to play its fade-out/collapse animation before removing it.
+*/
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function FAQ() {
-  /* CONCEPT: State Logic
-    -------------------
-    Currently, `selectedIndex` is a static constant (0), which means the first FAQ item is permanently open. In a real-world project, you would replace this with `useState` to allow users to click and toggle items.
+  /* CONCEPT: Accordion State Logic
+    ------------------------------
+    - We store the `index` of the currently open item.
+    - `0`: The first item starts open.
+    - `null`: If we wanted all closed initially.
+    - Logic: Only ONE item can match `selectedIndex` at a time. This creates an "Exclusive Accordion" (opening one automatically closes the others).
   */
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -16,8 +25,8 @@ export default function FAQ() {
     <section className="py-24 px-4">
       <div className="container mx-auto">
         {/* VIEW: Header Grouping
-            We use a consistent pattern: Tag -> Headline -> Description (if any).
-            `flex justify-center` ensures the Tag component stays centered regardless of width.
+            Standardized layout pattern: Tag -> Headline.
+            `flex justify-center`: Keeps the tag centered relative to the section.
         */}
         <div className="flex justify-center">
           <Tag>FAQ</Tag>
@@ -30,33 +39,34 @@ export default function FAQ() {
 
         {/* VIEW: The Accordion List
             ------------------------
-            - `mt-12`: High margin creates a clear separation between the "Heading" and the "Content".
-            - `flex flex-col gap-6`: Vertical stack with consistent spacing between question boxes.
-            - `max-w-xl mx-auto`: Keeps the FAQ list narrow and centered. 
-              DESIGN TIP: Reading long lines of text is tiring; keeping FAQs narrow improves focus.
+            - `mt-12`: High margin for visual separation.
+            - `max-w-xl`: Restricts width. 
+              *Design Rule*: Text lines shouldn't be too long (approx 60-75 chars) for optimal readability. This constraint enforces that.
         */}
         <div className="mt-12 flex flex-col gap-6 max-w-xl mx-auto">
           {FAQ_Items.map((faq, faqIndex) => (
             <div
-              className="bg-neutral-900 border border-white/10 rounded-2xl p-6"
               key={faq.question}
+              className="bg-neutral-900 border border-white/10 rounded-2xl p-6"
             >
-              {/* LAYOUT: Question Row
-                  `flex justify-between`: Pushes the text to the left and the icon to the right.
-                  `items-center`: Ensures the plus icon is vertically centered with the text.
+              {/* INTERACTION: The Trigger
+                  ------------------------
+                  - The header row acts as the button. 
+                  - `onClick`: Sets this item's index as the "Selected" one.
+                    This triggers a re-render, causing the previously open item to close and this one to open.
+                  - `cursor-pointer`: UX cue that this area is clickable.
               */}
               <div
-                className="flex justify-between items-center"
+                className="flex justify-between items-center cursor-pointer"
                 onClick={() => setSelectedIndex(faqIndex)}
               >
                 <h3 className="font-medium">{faq.question}</h3>
 
-                {/* SVG: The Interactive Icon
-                    -------------------------
-                    - `shrink-0`: Prevents the icon from getting squashed if the question text is very long.
-                    - `rotate-45`: A clever design trick. Instead of swapping icons, we just rotate 
-                      the "plus" 45 degrees to turn it into an "X". 
-                    - This is handled conditionally: `selectedIndex === faqIndex && "rotate-45"`.
+                {/* ANIMATION: Icon Rotation
+                    ------------------------
+                    - Instead of two icons (+ and -), we use one (+) and rotate it 45deg.
+                    - `transition duration-300`: CSS transition is sufficient for simple rotation.
+                    - Logic: If this is the selected index, apply the rotation class.
                 */}
                 <svg
                   xmlns="https://www.w3.org/2000/svg"
@@ -78,27 +88,33 @@ export default function FAQ() {
                 </svg>
               </div>
 
-              {/* VIEW: The Answer (Conditional Content)
-                  ------------------------------------
-                  - Logic: If this item isn't the selected one, we add the `hidden` class.
-                  - `mt-6`: Spacing between the question and the revealed answer.
-                  - `text-white/50`: Dulls the answer text to emphasize the question.
+              {/* ANIMATION: The Collapse Effect
+                  ------------------------------
+                  - `AnimatePresence`: Monitors the conditional rendering (`selectedIndex === faqIndex`). When the condition becomes false, it forces the `motion.div` to play its `exit` prop.
               */}
               <AnimatePresence>
                 {selectedIndex === faqIndex && (
                   <motion.div
+                    /* DYNAMICS: The "Auto" Height Problem
+                      - CSS transitions cannot animate to `height: auto`.
+                      - Framer Motion solves this by measuring the content and calculating the exact pixel height.
+                      - `marginTop`: We animate the margin too! Otherwise, the text would vanish, but the gap between the title and text would snap instantly, looking jerky.
+                    */
                     initial={{
                       height: 0,
                       marginTop: 0,
                     }}
                     animate={{
-                      height: 'auto',
-                      marginTop: 24,
+                      height: "auto",
+                      marginTop: 24, // Matches the 'mt-6' (6 * 4px = 24px) spacing we want.
                     }}
                     exit={{
                       height: 0,
                       marginTop: 0,
                     }}
+                    /* STYLING:
+                      - `overflow-hidden`: CRITICAL. As the box shrinks, the text inside stays the same size. Without overflow-hidden, the text would "spill out" of the closing box.
+                    */
                     className={twMerge("overflow-hidden")}
                   >
                     <p className="text-white/50 leading-relaxed">
